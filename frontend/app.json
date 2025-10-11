@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "SeeQ",
+    "slug": "SeeQ",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "SeeQ",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
