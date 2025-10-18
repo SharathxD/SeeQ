@@ -27,15 +27,25 @@ import {
 } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech'; 
 
+// --- COLOR PALETTE DEFINITION ---
+const COLORS = {
+    SAND: '#FAE8B4',     // Primary Background/Lightest Tone
+    KHAKI: '#CBBD93',    // Secondary Background/Medium Light Tone
+    OLIVE: '#80775C',    // Accent/Medium Dark Text/Buttons
+    BROWN: '#574A24',    // Primary Text/Darkest Tone
+};
+// ---------------------------------
+
 const AUTO_CAPTURE_INTERVAL = 10000;
 const SWIPE_THRESHOLD = 50;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const BASE_FLASK_API_URL = 'https://ba96bcc8956c.ngrok-free.app'; 
+const WELCOME_SCREEN_DURATION = 2750; // 2 seconds added
+const BASE_FLASK_API_URL = 'https://db366d26d64b.ngrok-free.app'; 
 
 const speakCaption = (text: string) => {
     Speech.stop();
     Speech.speak(text, {
-        language: 'en-US',
+        language: 'kn-IN',
         rate: 1.0,
         pitch: 1.0,
     });
@@ -61,15 +71,18 @@ const CaptureToast: React.FC<ToastProps> = ({ imageUri, caption, isVisible, onCl
                 useNativeDriver: true,
             }).start(() => {
                 if (!isUploading) {
-                    setTimeout(() => {
+                    const timeout = setTimeout(() => {
                         Animated.timing(animatedScale, {
                             toValue: 0,
                             duration: 200,
                             useNativeDriver: true,
                         }).start(onClose);
                     }, 500);
+                    return () => clearTimeout(timeout);
                 }
             });
+        } else {
+            animatedScale.setValue(0);
         }
     }, [isVisible, onClose, isUploading, animatedScale]);
 
@@ -144,7 +157,47 @@ const processImage = async (fileUri: string, targetEndpoint: string, source: 'vl
     }
 };
 
+
+// --- Welcome Screen Component ---
+/**
+ * Simple component for the initial splash screen with enhanced styling and design elements.
+ */
+const WelcomeScreen = () => {
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: WELCOME_SCREEN_DURATION / 2, // Fade in for half the total duration
+            easing: Easing.ease,
+            useNativeDriver: true,
+        }).start();
+    }, [opacity]);
+
+    return (
+        <View style={styles.welcomeContainer}>
+            {/* Abstract background shapes - Layered Organic Design */}
+            <View style={styles.welcomeShapeTopLayer1} />
+            <View style={styles.welcomeShapeTopLayer2} />
+
+            <Animated.View style={[styles.welcomeTextContainer, { opacity }]}>
+                <Text style={styles.welcomeText}>
+                    SeeQ 
+                </Text>
+                <Text style={styles.welcomeSubText}>
+                    See . Speek . Survive
+                </Text>
+            </Animated.View>
+        </View>
+    );
+}
+// ---------------------------------
+
+
 export default function App() {
+    // NEW STATE: Controls the visibility of the Welcome Screen
+    const [isLoadingInitial, setIsLoadingInitial] = useState(true);
+
     const [permission, requestPermission] = useCameraPermissions();
     const ref = useRef<CameraView>(null);
     const [currentMode, setCurrentMode] = useState<'vlm' | 'ocr'>('vlm');
@@ -153,6 +206,16 @@ export default function App() {
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [currentCaption, setCurrentCaption] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+
+    // --- Welcome Screen Timer Effect ---
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoadingInitial(false);
+        }, WELCOME_SCREEN_DURATION); // Hide after 2 seconds
+
+        return () => clearTimeout(timer); // Cleanup the timer
+    }, []);
+
 
     const takePicture = useCallback(async (source: 'vlm' | 'ocr') => {
         if (ref.current) {
@@ -182,15 +245,15 @@ export default function App() {
     }, [isUploading]);
 
     useEffect(() => {
-        if (currentMode === 'vlm' && permission?.granted) {
+        // Only run auto-capture if the welcome screen is done loading
+        if (!isLoadingInitial && currentMode === 'vlm' && permission?.granted) {
             const interval = setInterval(() => {
                 if (!isUploading) takePicture('vlm');
             }, AUTO_CAPTURE_INTERVAL);
             return () => clearInterval(interval);
         }
-    }, [currentMode, takePicture, permission, isUploading]);
+    }, [currentMode, takePicture, permission, isUploading, isLoadingInitial]); // Added isLoadingInitial to dependencies
 
-    // This function now provides an audio cue on mode change
     const onHandlerStateChange = (event: PanGestureHandlerStateChangeEvent) => {
         if (event.nativeEvent.state === State.END && !isUploading) {
             const { translationX } = event.nativeEvent;
@@ -207,7 +270,6 @@ export default function App() {
 
             if (newMode) {
                 setCurrentMode(newMode);
-                // Announce the new mode with an audio cue
                 const modeName = newMode === 'vlm' 
                     ? 'Description' 
                     : 'text';
@@ -216,6 +278,12 @@ export default function App() {
         }
     };
 
+    // 1. RENDER WELCOME SCREEN
+    if (isLoadingInitial) {
+        return <WelcomeScreen />;
+    }
+
+    // 2. RENDER PERMISSION SCREEN
     if (!permission) {
         return <SafeAreaView style={styles.centerContainer}><Text style={styles.loadingText}>Loading permissions...</Text></SafeAreaView>;
     }
@@ -223,16 +291,18 @@ export default function App() {
     if (!permission.granted) {
         return (
             <View style={styles.centerContainer}>
-                <Text style={{ textAlign: 'center', color: '#FFF' }}>
+                <Text style={{ textAlign: 'center', color: COLORS.SAND }}>
                     We need your permission to use the camera
                 </Text>
-                <Button onPress={requestPermission} title="Grant permission" />
+                <Button onPress={requestPermission} title="Grant permission" color={COLORS.OLIVE} />
             </View>
         );
     }
 
+    // 3. RENDER MAIN APP
     const isvlm = currentMode === 'vlm';
-    const headerColor = isvlm ? '#f700ffff' : '#00f911ff';
+    // Use the color palette for mode indication
+    const headerColor = isvlm ? COLORS.KHAKI : COLORS.SAND;
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -258,9 +328,12 @@ export default function App() {
                                 >
                                     <SafeAreaView style={styles.safeOverlay}>
                                         <View style={styles.overlayContent}>
-                                            <Text style={[styles.headerText, { color: headerColor }]}>
-                                                {isvlm ? 'Automatic Capture (VLM)' : 'OCR Capture (OCR)'}
-                                            </Text>
+                                            {/* Header with background */}
+                                            <View style={styles.headerBackgroundContainer}>
+                                                <Text style={[styles.headerText, { color: COLORS.BROWN }]}>
+                                                    {isvlm ? 'Automatic Capture (VLM)' : 'OCR Capture (OCR)'}
+                                                </Text>
+                                            </View>
                                             <Text style={styles.instructionText}>
                                                 {isvlm
                                                     ? 'Auto Capture at every interval'
@@ -299,23 +372,104 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-    appContainerFull: { flex: 1, backgroundColor: '#000' },
-    centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000' },
-    loadingText: { color: '#D1D5DB', fontSize: 18 },
+    // --- UPDATED WELCOME STYLES WITH DESIGN ELEMENTS ---
+    welcomeContainer: {
+        flex: 1,
+        backgroundColor: COLORS.BROWN, // Dark background
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative', 
+        overflow: 'hidden', 
+    },
+    // Container for text to ensure it's above shapes
+    welcomeTextContainer: {
+        zIndex: 10, // Ensure text is on top
+        alignItems: 'center',
+    },
+    welcomeText: {
+        fontSize: 52, 
+        fontWeight: '900', 
+        color: COLORS.SAND, // Light text on dark background
+        marginBottom: 10,
+        letterSpacing: 3,
+    },
+    welcomeSubText: {
+        fontSize: 18,
+        fontWeight: '500', 
+        color: COLORS.KHAKI, // Medium light tone for subtitle
+        textAlign: 'center',
+        paddingTop: 10,
+        borderTopWidth: 2, 
+        borderColor: COLORS.KHAKI,
+    },
+    // New Styles for Abstract Shapes (Organic Wave/Hill Layers)
+    welcomeShapeTopLayer1: {
+        position: 'absolute',
+        top: -SCREEN_WIDTH * 0.4, // Position it high up
+        width: SCREEN_WIDTH * 1.5,
+        height: SCREEN_WIDTH * 0.8,
+        backgroundColor: COLORS.OLIVE, // Olive layer
+        borderRadius: SCREEN_WIDTH * 0.75, // Creates a large, soft, oval-like shape
+        opacity: 0.6,
+        transform: [{ rotate: '15deg' }],
+    },
+    welcomeShapeTopLayer2: {
+        position: 'absolute',
+        top: -SCREEN_WIDTH * 0.2, 
+        width: SCREEN_WIDTH * 1.2,
+        height: SCREEN_WIDTH * 0.6,
+        backgroundColor: COLORS.KHAKI, // Khaki layer
+        borderRadius: SCREEN_WIDTH * 0.6,
+        opacity: 0.7,
+        transform: [{ rotate: '-10deg' }],
+    },
+    // --- END UPDATED WELCOME STYLES ---
+
+    appContainerFull: { flex: 1, backgroundColor: COLORS.BROWN }, // Dark background outside camera view
+    centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.OLIVE }, // Olive background for non-camera screens
+    loadingText: { color: COLORS.SAND, fontSize: 18 }, // Light text on dark background
     contentContainer: { flex: 1 },
     camera: StyleSheet.absoluteFillObject,
     fullScreenTouch: { flex: 1 },
-    safeOverlay: { backgroundColor: 'rgba(0, 0, 0, 0.4)', paddingHorizontal: 20, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 },
-    overlayContent: { paddingVertical: 10, alignItems: 'center' },
-    headerText: { fontSize: 24, fontWeight: '800', marginBottom: 5 },
-    instructionText: { fontSize: 15, color: '#D1D5DB', marginBottom: 8, textAlign: 'center' },
-    swipeHint: { fontSize: 12, color: '#A1A1AA' },
+    // Use darker overlay on the camera to ensure text is readable
+    safeOverlay: { 
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Slightly darker overlay for the whole safe area
+        paddingHorizontal: 20, 
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10 
+    },
+    overlayContent: { 
+        paddingVertical: 10, 
+        alignItems: 'center',
+        // New: Added padding to the top to accommodate the header background
+        paddingTop: Platform.OS === 'android' ? 20 : 0, 
+    },
+    // NEW STYLE: Container for the header text with a background
+    headerBackgroundContainer: {
+        backgroundColor: COLORS.SAND, // Lightest tone for the background
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 20, // Rounded pill shape
+        marginBottom: 10, // Space between header and other text
+        alignSelf: 'center', // Center the pill
+        marginTop: Platform.OS === 'android' ? 0 : 20, // Adjust for iOS safe area
+    },
+    headerText: { 
+        fontSize: 24, 
+        fontWeight: '800', 
+        color: COLORS.BROWN, // Dark text on light background
+    }, 
+    instructionText: { fontSize: 15, color: COLORS.KHAKI, marginBottom: 8, textAlign: 'center' }, // Khaki for better readability on dark overlay
+    swipeHint: { fontSize: 12, color: COLORS.SAND }, // Sand for the lightest hint
+    
+    // Toast styles (Use the sand color for the toast body, and dark for text/accents)
     toastContainer: { ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center', zIndex: 10 },
-    toastContent: { padding: 20, backgroundColor: 'white', borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 5, elevation: 8, alignItems: 'center', maxWidth: SCREEN_WIDTH * 0.85 },
-    toastHeaderText: { fontSize: 20, fontWeight: '700', color: '#10B981', marginBottom: 10 },
-    toastImage: { width: 200, height: 200, borderRadius: 10, borderWidth: 3, borderColor: '#10B981', marginBottom: 10 },
-    captionText: { fontSize: 16, textAlign: 'center', marginTop: 8, color: '#333' },
+    toastContent: { padding: 20, backgroundColor: COLORS.SAND, borderRadius: 16, shadowColor: COLORS.BROWN, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 5, elevation: 8, alignItems: 'center', maxWidth: SCREEN_WIDTH * 0.85 },
+    toastHeaderText: { fontSize: 20, fontWeight: '700', color: COLORS.OLIVE, marginBottom: 10 }, // Olive for a noticeable header
+    toastImage: { width: 200, height: 200, borderRadius: 10, borderWidth: 3, borderColor: COLORS.KHAKI, marginBottom: 10 }, // Khaki border for a natural frame
+    captionText: { fontSize: 16, textAlign: 'center', marginTop: 8, color: COLORS.BROWN }, // Brown for primary text on sand background
+    
     loadingOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0, 0, 0, 0.6)', justifyContent: 'center', alignItems: 'center' },
-    uploadingText: { fontSize: 24, fontWeight: 'bold', color: 'white' },
+    uploadingText: { fontSize: 24, fontWeight: 'bold', color: COLORS.SAND }, // Sand on dark overlay
     spinner: { marginTop: 10 }
 });
