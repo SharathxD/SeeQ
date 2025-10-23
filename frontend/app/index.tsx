@@ -36,16 +36,17 @@ const COLORS = {
 };
 // ---------------------------------
 
-const AUTO_CAPTURE_INTERVAL = 10000;
+const AUTO_CAPTURE_INTERVAL = 5000;
 const SWIPE_THRESHOLD = 50;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const WELCOME_SCREEN_DURATION = 2750; // 2 seconds added
-const BASE_FLASK_API_URL = 'https://db366d26d64b.ngrok-free.app'; 
+const BASE_FLASK_API_URL = 'https://8284a21ecd07.ngrok-free.app'; 
 
+// telugu -> 'te-IN'
 const speakCaption = (text: string) => {
     Speech.stop();
     Speech.speak(text, {
-        language: 'kn-IN',
+        language: 'te-IN',
         rate: 1.0,
         pitch: 1.0,
     });
@@ -148,7 +149,8 @@ const processImage = async (fileUri: string, targetEndpoint: string, source: 'vl
 
         const result: AnalysisResult = await response.json();
         console.log(`[${source}] Analysis successful! Caption: ${result.caption}`);
-        if (result.caption) speakCaption(result.caption);
+        console.log(`[${source}] Full response:`, result);
+        if (result.caption) speakCaption(result.translated_caption);
         return result.caption;
 
     } catch (error: any) {
