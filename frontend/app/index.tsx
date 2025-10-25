@@ -40,13 +40,13 @@ const AUTO_CAPTURE_INTERVAL = 5000;
 const SWIPE_THRESHOLD = 50;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const WELCOME_SCREEN_DURATION = 2750; // 2 seconds added
-const BASE_FLASK_API_URL = 'https://8284a21ecd07.ngrok-free.app'; 
+const BASE_FLASK_API_URL = 'https://d4b640e54324.ngrok-free.app'; 
 
 // telugu -> 'te-IN'
 const speakCaption = (text: string) => {
     Speech.stop();
     Speech.speak(text, {
-        language: 'te-IN',
+        language: 'ka-IN',
         rate: 1.0,
         pitch: 1.0,
     });
@@ -122,6 +122,7 @@ const CaptureToast: React.FC<ToastProps> = ({ imageUri, caption, isVisible, onCl
 
 interface AnalysisResult {
     caption: string;
+    translated_caption: string;
 }
 
 const processImage = async (fileUri: string, targetEndpoint: string, source: 'vlm' | 'ocr') => {
@@ -150,7 +151,13 @@ const processImage = async (fileUri: string, targetEndpoint: string, source: 'vl
         const result: AnalysisResult = await response.json();
         console.log(`[${source}] Analysis successful! Caption: ${result.caption}`);
         console.log(`[${source}] Full response:`, result);
-        if (result.caption) speakCaption(result.translated_caption);
+
+        if (source === 'vlm' && result.translated_caption) {
+            speakCaption(result.translated_caption);
+        } else if (result.caption) {
+            speakCaption(result.caption);
+        }
+
         return result.caption;
 
     } catch (error: any) {
