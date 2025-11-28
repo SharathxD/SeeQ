@@ -43,6 +43,12 @@ const WELCOME_SCREEN_DURATION = 2750; // 2 seconds added
 const BASE_FLASK_API_URL = 'https://d4b640e54324.ngrok-free.app'; 
 
 // telugu -> 'te-IN'
+
+// tamil -> 'ta-IN'
+//Telugu: 'te-IN'
+//Hindi: 'hi-IN'
+//English: 'en-IN'
+//Tamil: 'ta-IN'
 const speakCaption = (text: string) => {
     Speech.stop();
     Speech.speak(text, {
