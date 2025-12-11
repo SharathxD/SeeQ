@@ -50,7 +50,7 @@ Navigation integration.
 - [X] Give results for all
 - [ ] Specify the configs of each model
 - [-] better file structure
-- [ ] UI changes if required
+- [ ] add imgs of FE
 - [x] Fix ocr 
 
 
