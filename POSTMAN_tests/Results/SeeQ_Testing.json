@@ -1,0 +1,568 @@
+{
+	"id": "bb54d629-8387-450c-bdfc-babf4036a586",
+	"name": "SeeQ",
+	"timestamp": "2025-12-08T15:14:29.389Z",
+	"collection_id": "45095592-fb8f7db5-31cf-484c-a109-ab2e85786a10",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 180,
+	"delay": "3000",
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-12-08T15:06:31.577Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "2b6db819-f6e1-45f8-ae83-d5643a277462",
+			"name": "Status",
+			"url": "https://fbebae6d9547.ngrok-free.app/",
+			"time": 486,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response has SmolVLM2 status": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 30,
+					"fail": 0
+				},
+				"Response has SmolVLM2 status": {
+					"pass": 30,
+					"fail": 0
+				}
+			},
+			"times": [
+				559,
+				471,
+				475,
+				499,
+				479,
+				474,
+				475,
+				472,
+				473,
+				483,
+				476,
+				479,
+				473,
+				478,
+				505,
+				478,
+				479,
+				470,
+				486,
+				474,
+				475,
+				506,
+				474,
+				501,
+				507,
+				471,
+				474,
+				481,
+				484,
+				486
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has SmolVLM2 status": true
+				}
+			]
+		},
+		{
+			"id": "0bf1be71-732b-4b86-aec2-ab69a082ff92",
+			"name": "VLM",
+			"url": "https://fbebae6d9547.ngrok-free.app/vlm",
+			"time": 5223,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response contains caption and translated_caption": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 30,
+					"fail": 0
+				},
+				"Response contains caption and translated_caption": {
+					"pass": 30,
+					"fail": 0
+				}
+			},
+			"times": [
+				5294,
+				4903,
+				4976,
+				5418,
+				5052,
+				4995,
+				5384,
+				5008,
+				5014,
+				5528,
+				5130,
+				5121,
+				5494,
+				5075,
+				5164,
+				5654,
+				5094,
+				5114,
+				5684,
+				5185,
+				5212,
+				5734,
+				5187,
+				5197,
+				5757,
+				5281,
+				5237,
+				5829,
+				5299,
+				5223
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				},
+				{
+					"Status code is 200": true,
+					"Response contains caption and translated_caption": true
+				}
+			]
+		},
+		{
+			"id": "69368940-9579-4f2c-97b6-e23660eda483",
+			"name": "ocr",
+			"url": "https://fbebae6d9547.ngrok-free.app/ocr",
+			"time": 808,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"OCR result is not empty": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 30,
+					"fail": 0
+				},
+				"OCR result is not empty": {
+					"pass": 30,
+					"fail": 0
+				}
+			},
+			"times": [
+				832,
+				807,
+				846,
+				837,
+				815,
+				827,
+				846,
+				810,
+				840,
+				815,
+				845,
+				810,
+				837,
+				862,
+				818,
+				821,
+				816,
+				812,
+				840,
+				817,
+				817,
+				813,
+				813,
+				821,
+				836,
+				842,
+				811,
+				823,
+				812,
+				808
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				},
+				{
+					"Status code is 200": true,
+					"OCR result is not empty": true
+				}
+			]
+		}
+	],
+	"count": 30,
+	"totalTime": 197509,
+	"collection": {
+		"requests": [
+			{
+				"id": "2b6db819-f6e1-45f8-ae83-d5643a277462",
+				"method": "GET"
+			},
+			{
+				"id": "0bf1be71-732b-4b86-aec2-ab69a082ff92",
+				"method": "POST"
+			},
+			{
+				"id": "69368940-9579-4f2c-97b6-e23660eda483",
+				"method": "POST"
+			}
+		]
+	}
+}
