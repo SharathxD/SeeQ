@@ -47,9 +47,9 @@ Navigation integration.
 ## ToDO
 
 - [X] Build README for FE/BE.
-- [ ] Give results for all
+- [X] Give results for all
 - [ ] Specify the configs of each model
-- [ ] better file structure
+- [-] better file structure
 - [ ] UI changes if required
 - [x] Fix ocr 
 
