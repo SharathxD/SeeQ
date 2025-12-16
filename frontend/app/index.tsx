@@ -200,7 +200,7 @@ const WelcomeScreen = () => {
                     SeeQ 
                 </Text>
                 <Text style={styles.welcomeSubText}>
-                    See . Speek . Survive
+                    See . Speak . Survive
                 </Text>
             </Animated.View>
         </View>
