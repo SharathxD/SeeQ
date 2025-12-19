@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SeeQ",
-    "slug": "SeeQ",
+    "slug": "seeq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/seeq.png",
@@ -43,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "feed4a5e-a0ef-41e4-84ec-9487fb20ac0c"
+      }
+    },
+    "owner": "sharath07"
   }
 }
